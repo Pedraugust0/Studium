@@ -1,4 +1,4 @@
-![studium](https://github.com/user-attachments/assets/b8a21069-6599-4d3c-bdc9-da52f4dfc622)
+
 # Studium 🤖
 
 ## Projeto 🔧 
@@ -8,13 +8,13 @@ Este é um bot desenvolvido em Python para o Discord, projetado para ajudar no g
 
 ## Funções 🕹️
 
-### Gerenciamento de Canais ![Studium - Icone](https://github.com/user-attachments/assets/a864ae62-0fc0-436b-832d-777d532b3fb2)
+### Gerenciamento de Canais
 Escolher quais canais o bot pode interagir com o usuário.
 
-### Gerencimaneot de Tarefas ![Studium - Icone](https://github.com/user-attachments/assets/a864ae62-0fc0-436b-832d-777d532b3fb2)
+### Gerencimaneot de Tarefas
 Adicionar tarefas e saber quais tarefas você fez e faltam fazer.
 
-### Método de estudo Pomodoro ![Studium - Icone](https://github.com/user-attachments/assets/a864ae62-0fc0-436b-832d-777d532b3fb2)
+### Método de estudo Pomodoro
 Iniciar um período de tempo de sua escolha, e quantas vezes este período ira se repetir, para que assim ele simule a estratégia de estudo Pomodoro.
 
 <br>
