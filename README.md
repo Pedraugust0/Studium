@@ -1,5 +1,5 @@
-# Studium 🤖
-![studium](https://github.com/user-attachments/assets/9066d3d5-1e34-4010-a4e1-d192b4cc9907)
+# Studium ![studium](https://github.com/user-attachments/assets/9066d3d5-1e34-4010-a4e1-d192b4cc9907)
+
 
 ---
 
