@@ -13,7 +13,7 @@ Este é um bot desenvolvido em Python para o Discord, projetado para ajudar no g
 ### Gerenciamento de Canais <img src="https://github.com/user-attachments/assets/c6739c64-c3de-4852-9f4f-e945b74a9e72" width="25px"></img>
 Escolher quais canais o bot pode interagir com o usuário.
 
-### Gerencimaneot de Tarefas <img src="https://github.com/user-attachments/assets/c6739c64-c3de-4852-9f4f-e945b74a9e72" width="25px"></img>
+### Gerenciamento de Tarefas <img src="https://github.com/user-attachments/assets/c6739c64-c3de-4852-9f4f-e945b74a9e72" width="25px"></img>
 Adicionar tarefas e saber quais tarefas você fez e faltam fazer.
 
 ### Método de estudo Pomodoro <img src="https://github.com/user-attachments/assets/c6739c64-c3de-4852-9f4f-e945b74a9e72" width="25px"></img>
