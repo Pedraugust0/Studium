@@ -5,7 +5,7 @@ import asyncio
 from dotenv import load_dotenv
 import os
 
-from database.db_models import db, DB_FILE, Encontro, Participante, EncontroParticipante
+from database.db_models import db, Encontro, Participante, EncontroParticipante
 from ui.view.encontro_views import View_Encontro_Inicio
 
 # Carrega as variáveis de ambiente do arquivo .env
@@ -32,12 +32,14 @@ async def pomodoro(interaction: discord.Interaction,
                    tempo_estudo: int, 
                    tempo_intervalo: int,
                 ):
-    
+
     await interaction.response.defer()
 
     usuario = interaction.user
     mensagem_erro = ""
     mensagens = []
+
+    intervalo_contador = 5 # Tempo de intervalo entre as mensagens de contagem
 
     #Testar se existe um tempo inválido
     if tempo_estudo < 1 :
@@ -62,28 +64,14 @@ async def pomodoro(interaction: discord.Interaction,
     mensagens.append(mensagem_anterior)
     await asyncio.sleep(3)
 
-    contador = datetime.timedelta(seconds=tempo_estudo)
-
-    # Loop durante o tempo especificado
-    while(contador.total_seconds() > 0):
-        await asyncio.sleep(1)
-        await mensagem_anterior.edit(content=f"Tempo restante! {contador}")
-
-        contador -= datetime.timedelta(seconds=1)
+    await comecar_contagem(tempo_estudo, intervalo_contador, mensagem_anterior)
 
     #Intervalo
     mensagem_anterior = await interaction.followup.send(content=f"Tempo de pomodoro acabou {usuario.mention}, iniciando descanso...", wait=True)
     mensagens.append(mensagem_anterior)
     await asyncio.sleep(3)
 
-    contador = datetime.timedelta(seconds=tempo_intervalo)
-
-    # Loop durante o tempo especificado
-    while(contador.total_seconds() > 0):
-        await asyncio.sleep(1)
-        await mensagem_anterior.edit(content=f"Tempo restante! {contador}")
-
-        contador -= datetime.timedelta(seconds=1)
+    await comecar_contagem(tempo_intervalo, intervalo_contador, mensagem_anterior)
 
     #Acabou o intervalo
     mensagem_anterior = await interaction.followup.send(content=f"Tempo de intervalo acabou {usuario.mention}!", wait=True)
@@ -94,6 +82,17 @@ async def pomodoro(interaction: discord.Interaction,
     #Apagar as mensagens anteriores
     for mensagem in mensagens:
         await mensagem.delete()
+
+async def comecar_contagem(tempo: int, intervalo_contador: int, mensagem: discord.Message):
+    contador = datetime.timedelta(minutes=tempo)
+
+    # Loop durante o tempo especificado
+    while(contador.total_seconds() > 0):
+        await mensagem.edit(content=f"Tempo restante! {contador}")
+        await asyncio.sleep(intervalo_contador)
+
+        contador -= datetime.timedelta(seconds=intervalo_contador)
+    
 
 @bot.tree.command(name="encontro", description="Gerenciar Encontros")
 async def telas_encontro(interaction: discord.Interaction):

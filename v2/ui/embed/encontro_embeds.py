@@ -1,5 +1,5 @@
 import discord
-from v2.database.db_models import Encontro, Participante
+from database.db_models import Encontro, Participante
 import peewee
 
 # Classe para mostrar os detalhes do encontro

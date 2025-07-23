@@ -1,6 +1,6 @@
 import discord
 import datetime
-from v2.database.db_models import Encontro, EncontroParticipante, Participante, db
+from database.db_models import Encontro, EncontroParticipante, Participante, db
 import peewee
 
 class Modal_Encontro_Criar(discord.ui.Modal):

@@ -1,7 +1,8 @@
 import discord
 import datetime
 from database.db_models import Encontro
-from ui.modal.encontro_modais import Modal_Encontro_Criar, Embed_Encontro_Listar
+from ui.modal.encontro_modais import Modal_Encontro_Criar
+from ui.embed.encontro_embeds import Embed_Encontro_Listar
 
 # Classe com os botões de interação com os encontros iniciais
 class View_Encontro_Inicio(discord.ui.View):
@@ -102,4 +103,4 @@ class View_Encontro_Listar(discord.ui.View):
         
         embed = await self.embed_encontro.mostrar_encontro(interaction)
 
-        await interaction.response.send_message(embed=embed, view=self)
+        await interaction.response.send_message(embed=embed, view=self, ephemeral=True)
