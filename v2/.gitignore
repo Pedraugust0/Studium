@@ -2,4 +2,4 @@
 venv/
 __pycache__/
 *.pyc
-*.db # Seus arquivos de banco de dados, se não quiser versioná-los
+*.db
