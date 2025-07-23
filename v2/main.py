@@ -27,6 +27,7 @@ async def ola(interaction: discord.Interaction):
     
     await interaction.response.send_message(f"Olá {membro.mention}")
 
+
 @bot.tree.command(name="pomodoro", description=r"1° tempo de estudo; 2° tempo de intervalo; (Em minutos)")
 async def pomodoro(interaction: discord.Interaction, 
                    tempo_estudo: int, 
@@ -83,6 +84,7 @@ async def pomodoro(interaction: discord.Interaction,
     for mensagem in mensagens:
         await mensagem.delete()
 
+
 async def comecar_contagem(tempo: int, intervalo_contador: int, mensagem: discord.Message):
     contador = datetime.timedelta(minutes=tempo)
 
@@ -110,6 +112,11 @@ async def telas_encontro(interaction: discord.Interaction):
 
 
 @bot.event
+async def on_join(guild: discord.Guild):
+    print(f"Bot entrou no servidor: {guild.name} ({guild.id})")
+
+
+@bot.event
 async def on_ready():
     print("Bot Online!!!")
     
@@ -127,8 +134,11 @@ async def on_ready():
         db.connect()
         db.create_tables([Participante, Encontro, EncontroParticipante])
     
-    except discord.CommandSyncFailure:
-        print("comandos não sincronizados!")
+    except discord.app_commands.CommandSyncFailure as error:
+        print(f"Erro ao sincronizar os comandos. (dados inválidos, status: {error.status})")
+
+    except discord.HTTPException as error:
+        print(f"Erro ao sincronizar os comandos. (status: {error.status})")
 
 @bot.event
 async def on_message(message: discord.Message):
@@ -151,5 +161,13 @@ async def on_message(message: discord.Message):
 
     print(log)
 
-# Inicia o bot com a chave do bot
-bot.run(os.getenv("DISCORD_TOKEN"))
+
+
+if __name__ == "__main__":
+    token = os.getenv("DISCORD_TOKEN")
+
+    if token is None:
+        raise ValueError("DISCORD_TOKEN não está definido no ambiente.")
+
+    # Inicia o bot com a chave do bot
+    bot.run(token)
