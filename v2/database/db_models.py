@@ -1,6 +1,6 @@
 import peewee
 
-DB_FILE = "v2/sql/banco.db"
+DB_FILE = "database/banco.db"
 db = peewee.SqliteDatabase(DB_FILE)
 
 class BaseModel(peewee.Model):
