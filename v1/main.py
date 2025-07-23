@@ -3,8 +3,11 @@ from discord.ext import commands
 from datetime import timedelta
 from funcoes import getChannel, channel_unwhitelist, channel_setwhitelist
 from funcoes import frase_motivacao, frase_parabenizacao
-from dadosPrivados import bot_key, canal_id
+from dotenv import load_dotenv
+import os
 import asyncio
+
+load_dotenv()
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -200,6 +203,8 @@ async def on_message(message:discord.Message):
     if message.author.bot:
         return
     
+    await bot.process_commands(message) # Caso esteja na whitelist ele executa o comando
+
     channels_ids = getChannel() # Pega o id de todos os canais na whitelist
     
     if str(message.channel.id) not in channels_ids: # Compara se a mensagem enviada não está na whitelist
@@ -220,7 +225,7 @@ async def on_member_join(member:discord.Member):
     embed.set_image(url=member.avatar.url)
     embed.set_footer(text="Aproveite o Servidor!!!")
     
-    channel = bot.get_channel(canal_id)
+    channel = next((c for c in member.guild.text_channels if c.permissions_for(member.guild.me).send_messages), None)
     
     await channel.send(embed=embed)
 
@@ -239,4 +244,4 @@ async def on_member_remove(member:discord.Member):
     
     await channel.send(embed=embed)
 
-bot.run(bot_key)
+bot.run(os.getenv("BOT_KEY"))

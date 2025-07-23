@@ -1,9 +1,9 @@
 import pyodbc
-from dadosPrivados import string_connection
+import os
 from random import choice
 
 def channel_setwhitelist(channel_id):
-    cnxn_str = (string_connection)
+    cnxn_str = (os.getenv('STRING_CONNECTION'))
     conn = pyodbc.connect(cnxn_str)
     cursor = conn.cursor()
     
@@ -20,7 +20,7 @@ def channel_setwhitelist(channel_id):
     conn.close()
 
 def channel_unwhitelist(channel_id):
-    cnxn_str = (string_connection)
+    cnxn_str = (os.getenv('STRING_CONNECTION'))
     conn = pyodbc.connect(cnxn_str)
     cursor = conn.cursor()
     
@@ -36,7 +36,7 @@ def channel_unwhitelist(channel_id):
     conn.close()
 
 def getChannel():
-    cnxn_str = (string_connection)
+    cnxn_str = (os.getenv('STRING_CONNECTION'))
     conn = pyodbc.connect(cnxn_str)
     cursor = conn.cursor()
     
