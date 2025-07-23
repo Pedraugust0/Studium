@@ -19,12 +19,18 @@ Adicionar tarefas e saber quais tarefas você fez e faltam fazer.
 ### Método de estudo Pomodoro <img src="https://github.com/user-attachments/assets/c6739c64-c3de-4852-9f4f-e945b74a9e72" width="25px"></img>
 Iniciar um período de tempo de sua escolha, e quantas vezes este período ira se repetir, para que assim ele simule a estratégia de estudo Pomodoro.
 
+### Agendamento de Encontros <img src="https://github.com/user-attachments/assets/c6739c64-c3de-4852-9f4f-e945b74a9e72" width="25px"></img>
+Poder agendar um encontro com seus colegas para manter a pontualidade.
+
 <br>
 
 ## Tecnologias usadas 💻
 
-### discord.py <img src="https://github.com/user-attachments/assets/e2da0204-e0e6-4b0c-b73f-456ba6b41b28" width="15px"></img> 
+### discord.py 
 Usado para a construção principal do programa, em conjunto com asycio para métodos assíncronos, para que assim o Bot possa gerenciar varios comandos ao mesmo tempo.
 
-### pyodbc <img src="https://github.com/user-attachments/assets/9ccd8c04-4bbe-4dec-8921-e273b029163b" width="15px"></img> 
-Usado para conectar e enviar queries SQL do script ao SGBD.
+### sqlite
+SGBD local.
+
+### peewee
+ORM para construção segura e simples de scritps SQL.
