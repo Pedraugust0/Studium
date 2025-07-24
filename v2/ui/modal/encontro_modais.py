@@ -2,6 +2,7 @@ import discord
 import datetime
 from database.db_models import Encontro, EncontroParticipante, Participante, db
 import peewee
+import datetime
 
 class Modal_Encontro_Criar(discord.ui.Modal):
 
@@ -53,7 +54,6 @@ class Modal_Encontro_Criar(discord.ui.Modal):
             data_fim = datetime.datetime.strptime(data_fim, r"%d/%m/%y %H:%M")
 
         except ValueError:
-
             # Embed caso a data não esteja no formato correto
             embed_erro = discord.embeds.Embed(
                 title="Erro na data!",
@@ -68,9 +68,11 @@ class Modal_Encontro_Criar(discord.ui.Modal):
 
             # Envio do embed
             await interaction.response.send_message(embed=embed_erro)
+            # Para o método para não dar erro de tipagem
+            return
 
-        # Pegar o id do usuário da interação, caso não exista ele cria um
         try:
+            # Pegar o id do usuário da interação, caso não exista ele cria um
             participante_id = Participante.get(discord_id=criador).id
 
         except peewee.DoesNotExist:
