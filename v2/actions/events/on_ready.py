@@ -7,11 +7,6 @@ from actions.tasks.checagens import checar_datas
 @bot.event
 async def on_ready():
     print("Bot Online!!!")
-    
-    # começar a checar lembretes
-    if not checar_datas.is_running():
-        print("Iniciando checagem de datas...")
-        await checar_datas.start()
 
     try:
         comandos = await bot.tree.sync()
@@ -26,6 +21,11 @@ async def on_ready():
         # Conecta ao banco de dados e cria as tabelas se não existirem
         db.connect()
         db.create_tables([Participante, Encontro, EncontroParticipante])
+
+        # começar a checar lembretes
+        if not checar_datas.is_running():
+            print("Iniciando checagem de datas...")
+            await checar_datas.start()
     
     except discord.app_commands.CommandSyncFailure as error:
         print(f"Erro ao sincronizar os comandos. (dados inválidos, status: {error.status})")
