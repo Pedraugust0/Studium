@@ -2,7 +2,7 @@
 <img src="https://github.com/user-attachments/assets/86523611-6f5a-4afd-87a0-bba3d9604c2c" style="border-radius: 50%;" width="200px"></img>
 
 <br>
-
+ 
 ## Projeto 🔧 
 Este é um bot desenvolvido em Python para o Discord, projetado para ajudar no gerenciamento de tarefas e estudos. Com funcionalidades simples e eficazes, o bot permite que os usuários criem, editem, listem e removam tarefas, além de configurar lembretes e organizar atividades de estudo.
 
