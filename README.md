@@ -24,6 +24,7 @@ Poder agendar um encontro com seus colegas para manter a pontualidade.
 
 <br>
 
+
 ## Tecnologias usadas 💻
 
 ### discord.py 
