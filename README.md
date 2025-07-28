@@ -8,7 +8,6 @@ Este é um bot desenvolvido em Python para o Discord, projetado para ajudar no g
 
 <br>
 
-
 ## Funções 🕹️
 
 ### Gerenciamento de Canais <img src="https://github.com/user-attachments/assets/c6739c64-c3de-4852-9f4f-e945b74a9e72" width="25px"></img>
