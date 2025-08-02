@@ -47,13 +47,19 @@ class Modal_Encontro_Criar(discord.ui.Modal):
         data_fim = self.data_fim.value
         titulo = self.titulo_encontro.value
         descricao = self.descricao_encontro.value
+        id_chat_criacao = str(interaction.channel_id)
 
         # Tenta converter a string em data
         try:
             data_inicio = datetime.datetime.strptime(data_inicio, r"%d/%m/%y %H:%M")
             data_fim = datetime.datetime.strptime(data_fim, r"%d/%m/%y %H:%M")
 
+            if data_inicio <= datetime.datetime.now() or data_fim <= datetime.datetime.now() or data_fim < data_inicio:
+                raise ValueError
+
         except ValueError:
+            await interaction.response.defer()
+
             # Embed caso a data não esteja no formato correto
             embed_erro = discord.embeds.Embed(
                 title="Erro na data!",
@@ -67,7 +73,7 @@ class Modal_Encontro_Criar(discord.ui.Modal):
             embed_erro.add_field(name="Valor inserido", value=data_fim, inline=True)
 
             # Envio do embed
-            await interaction.response.send_message(embed=embed_erro)
+            await interaction.followup.send(embed=embed_erro)
             # Para o método para não dar erro de tipagem
             return
 
@@ -85,7 +91,9 @@ class Modal_Encontro_Criar(discord.ui.Modal):
             data_inicio=data_inicio,
             data_fim=data_fim,
             titulo=titulo,
-            descricao=descricao
+            descricao=descricao,
+            id_chat_criacao=id_chat_criacao,
+            iniciado=False
         )
 
         # Adicionar Participante

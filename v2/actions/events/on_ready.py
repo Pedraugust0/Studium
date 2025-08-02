@@ -1,8 +1,7 @@
 import discord
 from config.settings import bot
-import asyncio
 from database.db_models import db, Encontro, Participante, EncontroParticipante
-from actions.tasks.checagens import checar_datas
+from actions.tasks.checagens import esperar_ate_data
 
 @bot.event
 async def on_ready():
@@ -23,9 +22,9 @@ async def on_ready():
         db.create_tables([Participante, Encontro, EncontroParticipante])
 
         # começar a checar lembretes
-        if not checar_datas.is_running():
+        if not esperar_ate_data.is_running():
             print("Iniciando checagem de datas...")
-            await checar_datas.start()
+            await esperar_ate_data.start()
     
     except discord.app_commands.CommandSyncFailure as error:
         print(f"Erro ao sincronizar os comandos. (dados inválidos, status: {error.status})")

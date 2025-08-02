@@ -20,9 +20,11 @@ class Encontro(BaseModel):
     data_fim = peewee.DateTimeField()
     titulo = peewee.CharField()
     descricao = peewee.CharField()
+    id_chat_criacao = peewee.CharField()
+    iniciado = peewee.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.criador}, {self.data_criacao}, {self.data_inicio}, {self.data_fim}, {self.titulo}, {self.descricao}" 
+        return f"{self.criador}, {self.data_criacao}, {self.data_inicio}, {self.data_fim}, {self.titulo}, {self.descricao}, {self.id_chat_criacao}" 
 
 class EncontroParticipante(BaseModel):
     participante = peewee.ForeignKeyField(model=Participante)

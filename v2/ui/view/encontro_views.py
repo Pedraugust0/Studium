@@ -1,19 +1,17 @@
 import discord
-import datetime
 from database.db_models import Encontro
 from ui.modal.encontro_modais import Modal_Encontro_Criar
 from ui.embed.encontro_embeds import Embed_Encontro_Listar
 
 # Classe com os botões de interação com os encontros iniciais
 class View_Encontro_Inicio(discord.ui.View):
-    
     def __init__(self):
         super().__init__(timeout=180)
 
     # Criar
     @discord.ui.button(label="Criar Encontro", style=discord.ButtonStyle.primary, emoji="➕")
     async def botao_criar(self, interaction: discord.Interaction, button: discord.ui.Button):
-        
+
         # Mostra o modal para criar o encontro
         await interaction.response.send_modal(Modal_Encontro_Criar())
     
@@ -86,8 +84,15 @@ class View_Encontro_Listar(discord.ui.View):
     async def deletar(self, interaction: discord.Interaction, button: discord.ui.Button):
         
         # Pega o encontro atual selecionado
-        encontro_atual = self.embed_encontro.encontros[self.embed_encontro.encontro_atual]
-        encontro_atual.delete_instance()
+        try:
+            encontro_atual = self.embed_encontro.encontros[self.embed_encontro.encontro_atual]
+            encontro_atual.delete_instance()
+
+        # Caso não haja item nenhum no índice
+        except IndexError:
+            await interaction.response.send_message("Não há nada para remover!", ephemeral=True)
+            return
+
 
         # Atualiza a lista de encontros
         self.embed_encontro.encontros = Encontro.select()
