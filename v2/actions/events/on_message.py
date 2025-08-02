@@ -16,9 +16,8 @@ async def on_message(message: discord.Message):
     
     # Verifica se a mensagem é um comando
     if message.guild is None:
-        log = f"| User: {autor} ({message.author.id}) | Message: {message.clean_content} |"
-    
+        log = f"| Server: Particular | User: {autor} ({message.author.id}) | Message: {message.clean_content}"
     else:
-        log = f"| Server: {message.guild.name} ({message.guild.id}) | User: {autor} ({message.author.id}) | Message: {message.clean_content} |"
+        log = f"| Server: {message.guild.name} ({message.guild.id}) | User: {autor} ({message.author.id}) | Message: {message.clean_content}"
 
     print(log)

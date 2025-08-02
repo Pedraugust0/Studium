@@ -14,6 +14,8 @@ async def pomodoro(interaction: discord.Interaction,
     usuario = interaction.user
     mensagem_erro = ""
     mensagens = []
+    continuar = True
+    emojis = ["👍", "👎"]
 
     intervalo_contador = 5 # Tempo de intervalo entre as mensagens de contagem
 
@@ -35,29 +37,47 @@ async def pomodoro(interaction: discord.Interaction,
         await interaction.response.send_message(f"/pomodoro tempo_estudo=**__{tempo_estudo}__** tempo_intervalo=**__{tempo_intervalo}__**\n\n**{mensagem_erro}** {usuario.mention}", ephemeral=True)
         return
 
-    #Pomodoro
-    mensagem_anterior = await interaction.followup.send(content=f"Iniciando Pomodoro! {usuario.mention}", wait=True)
-    mensagens.append(mensagem_anterior)
-    await asyncio.sleep(3)
+    while continuar:
 
-    await comecar_contagem(tempo_estudo, intervalo_contador, mensagem_anterior)
+        #Pomodoro
+        mensagem_anterior = await interaction.followup.send(content=f"Iniciando Pomodoro! {usuario.mention}", wait=True)
+        mensagens.append(mensagem_anterior)
+        await asyncio.sleep(3)
 
-    #Intervalo
-    mensagem_anterior = await interaction.followup.send(content=f"Tempo de pomodoro acabou {usuario.mention}, iniciando descanso...", wait=True)
-    mensagens.append(mensagem_anterior)
-    await asyncio.sleep(3)
+        await comecar_contagem(tempo_estudo, intervalo_contador, mensagem_anterior)
 
-    await comecar_contagem(tempo_intervalo, intervalo_contador, mensagem_anterior)
+        #Intervalo
+        mensagem_anterior = await interaction.followup.send(content=f"Tempo de pomodoro acabou {usuario.mention}, iniciando descanso...", wait=True)
+        mensagens.append(mensagem_anterior)
+        await asyncio.sleep(3)
 
-    #Acabou o intervalo
-    mensagem_anterior = await interaction.followup.send(content=f"Tempo de intervalo acabou {usuario.mention}!", wait=True)
-    mensagens.append(mensagem_anterior)
+        await comecar_contagem(tempo_intervalo, intervalo_contador, mensagem_anterior)
 
-    await asyncio.sleep(5)
+        #Acabou o intervalo
+        mensagem_anterior = await interaction.followup.send(content=f"Tempo de intervalo acabou {usuario.mention}!", wait=True)
+        mensagens.append(mensagem_anterior)
 
-    #Apagar as mensagens anteriores
+        mensagem_anterior = await interaction.followup.send(content="Pomodoro terminou, quer começar outro?", wait=True)
+        mensagens.append(mensagem_anterior)
+
+        # Adiciona o sensor para checar a reação
+        reacao = await mensagem_confirmacao(mensagem_anterior, emojis)
+
+        if reacao.emoji == emojis[0]:
+            continuar = True
+        else:
+            continuar = False
+        
+        await asyncio.sleep(1)
+
+    # Apagar as mensagens anteriores
     for mensagem in mensagens:
-        await mensagem.delete()
+            try:
+                await mensagem.delete()
+            except discord.errors.NotFound:
+                continue
+
+
 
 
 async def comecar_contagem(tempo: int, intervalo_contador: int, mensagem: discord.Message):
@@ -69,3 +89,19 @@ async def comecar_contagem(tempo: int, intervalo_contador: int, mensagem: discor
         await asyncio.sleep(intervalo_contador)
 
         contador -= datetime.timedelta(seconds=intervalo_contador)
+
+
+async def mensagem_confirmacao(mensagem: discord.Message, emojis: list) -> discord.Reaction:
+    for emoji in emojis:
+        await mensagem.add_reaction(emoji)
+
+    # Checa se não é o bot, se for o emoji correto na mensagem correta
+    def check_reaction(reaction: discord.Reaction, user: discord.User):
+        return user != bot.user and str(reaction) in emojis and reaction.message.id == mensagem.id
+
+    try:
+        reaction, user = await bot.wait_for("reaction_add", timeout=60.0, check=check_reaction)
+        return reaction
+            
+    except TimeoutError:
+        return discord.Reaction()
